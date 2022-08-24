@@ -1,9 +1,11 @@
-import { SelectColor } from "../actions";
+import { BASE_URL } from "../../../utils";
+import { DeleteTodo } from "../actions";
 
 export const deleteTodoServer = (todoId) => async (dispatch) => {
-    const res = await fetch(`http://localhost:4000/todos/${todoId}`, {
+    const res = await fetch(`${BASE_URL}/${todoId}`, {
         method: "DELETE",
     });
-
-    dispatch(SelectColor(todoId));
+    const todo = await res.json();
+    console.log({ todo });
+    dispatch(DeleteTodo(todo.id));
 };

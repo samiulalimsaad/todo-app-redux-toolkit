@@ -1,7 +1,8 @@
+import { BASE_URL } from "../../../utils";
 import { SelectColor } from "../actions";
 
 export const updateColorServer = (todoId, color) => async (dispatch) => {
-    const res = await fetch(`http://localhost:4000/todos/${todoId}`, {
+    const res = await fetch(`${BASE_URL}/${todoId}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json; charset=UTF-8",

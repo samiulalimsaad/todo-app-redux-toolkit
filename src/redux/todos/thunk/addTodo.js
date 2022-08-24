@@ -1,7 +1,8 @@
+import { BASE_URL } from "../../../utils";
 import { addTodo } from "../actions";
 
 export const addTodoServer = (text) => async (dispatch) => {
-    const res = await fetch("http://localhost:4000/todos", {
+    const res = await fetch(BASE_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json; charset=UTF-8",

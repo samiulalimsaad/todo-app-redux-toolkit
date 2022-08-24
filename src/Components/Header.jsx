@@ -58,7 +58,13 @@ const Header = ({ fromCompleted }) => {
                             alt="Complete"
                         />
                     )}
-                    <span>Complete All Tasks</span>
+                    {fromCompleted ? (
+                        <span className="font-semibold text-3xl">
+                            Completed Tasks
+                        </span>
+                    ) : (
+                        <span>Complete All Tasks</span>
+                    )}
                 </li>
                 {fromCompleted && (
                     <li className="cursor-pointer" onClick={handleClearAll}>

@@ -1,5 +1,6 @@
 export const LOADED = "todo/loaded";
 export const ADDED = "todo/added";
+export const UPDATE_TITLE = "todo/update_title";
 export const TOGGLED = "todo/toggled";
 export const COLOR_SELECTED = "todo/color_selected";
 export const DELETED = "todo/deleted";

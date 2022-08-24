@@ -6,6 +6,7 @@ import {
     DELETED,
     LOADED,
     TOGGLED,
+    UPDATE_TITLE,
 } from "./actionTypes";
 
 export const loadTodo = (todos) => ({ type: LOADED, payload: { todos } });
@@ -13,6 +14,11 @@ export const loadTodo = (todos) => ({ type: LOADED, payload: { todos } });
 export const addTodo = (todo) => ({ type: ADDED, payload: { todo } });
 
 export const ToggledTodo = (todoId) => ({ type: TOGGLED, payload: { todoId } });
+
+export const updateTodoTitle = (todoId, text) => ({
+    type: UPDATE_TITLE,
+    payload: { todoId, text },
+});
 
 export const SelectColor = (todoId, color) => ({
     type: COLOR_SELECTED,

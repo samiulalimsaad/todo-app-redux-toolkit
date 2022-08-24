@@ -5,6 +5,7 @@ import pencilIcon from "../../assets/images/pencil.svg";
 import { deleteTodoServer } from "../../redux/todos/thunk/deleteTodo";
 import { updateColorServer } from "../../redux/todos/thunk/updateColor";
 import { updateTodoServer } from "../../redux/todos/thunk/updateStatus";
+import { updateTitleServer } from "../../redux/todos/thunk/updateTitle";
 
 const SingleTodo = ({ todo }) => {
     const { text, id, completed, color } = todo;
@@ -32,6 +33,7 @@ const SingleTodo = ({ todo }) => {
     };
 
     const handleTodoTitle = () => {
+        dispatch(updateTitleServer(id, input));
         setIsInput(false);
         setInput(text);
     };

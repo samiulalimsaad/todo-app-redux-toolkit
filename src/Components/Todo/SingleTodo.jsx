@@ -7,7 +7,7 @@ import { updateColorServer } from "../../redux/todos/thunk/updateColor";
 import { updateTodoServer } from "../../redux/todos/thunk/updateStatus";
 import { updateTitleServer } from "../../redux/todos/thunk/updateTitle";
 
-const SingleTodo = ({ todo }) => {
+const SingleTodo = ({ todo, fromCompleted }) => {
     const { text, id, completed, color } = todo;
 
     const [isInput, setIsInput] = useState(false);
@@ -20,11 +20,11 @@ const SingleTodo = ({ todo }) => {
     };
 
     const handleColorChange = (color) => {
-        dispatch(updateColorServer(id, color));
+        !fromCompleted && dispatch(updateColorServer(id, color));
     };
 
     const handleDelete = () => {
-        dispatch(deleteTodoServer(id));
+        !fromCompleted && dispatch(deleteTodoServer(id));
     };
 
     const handleOnBlur = () => {
@@ -33,7 +33,7 @@ const SingleTodo = ({ todo }) => {
     };
 
     const handleTodoTitle = () => {
-        dispatch(updateTitleServer(id, input));
+        !fromCompleted && dispatch(updateTitleServer(id, input));
         setIsInput(false);
         setInput(text);
     };
@@ -80,43 +80,49 @@ const SingleTodo = ({ todo }) => {
                     >
                         {text}
                     </div>
-                    <div
-                        className="flex-shrink-0 h-4 w-4 rounded-full ml-auto cursor-pointer"
-                        onClick={() => setIsInput(true)}
-                        title="click to edit task"
-                    >
-                        <img src={pencilIcon} alt="" />
-                    </div>
+                    {!fromCompleted && (
+                        <div
+                            className="flex-shrink-0 h-4 w-4 rounded-full ml-auto cursor-pointer"
+                            onClick={() => setIsInput(true)}
+                            title="click to edit task"
+                        >
+                            <img src={pencilIcon} alt="" />
+                        </div>
+                    )}
                 </>
             )}
 
-            <div
-                className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-green-500 border-green-500 ${
-                    color === "green" && "bg-green-500"
-                }`}
-                onClick={() => handleColorChange("green")}
-            ></div>
+            {!fromCompleted && (
+                <>
+                    <div
+                        className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-green-500 border-green-500 ${
+                            color === "green" && "bg-green-500"
+                        }`}
+                        onClick={() => handleColorChange("green")}
+                    ></div>
 
-            <div
-                className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-yellow-500 border-yellow-500  ${
-                    color === "yellow" && "bg-yellow-500 "
-                }`}
-                onClick={() => handleColorChange("yellow")}
-            ></div>
+                    <div
+                        className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-yellow-500 border-yellow-500  ${
+                            color === "yellow" && "bg-yellow-500 "
+                        }`}
+                        onClick={() => handleColorChange("yellow")}
+                    ></div>
 
-            <div
-                className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${
-                    color === "red" && "bg-red-500"
-                }`}
-                onClick={() => handleColorChange("red")}
-            ></div>
+                    <div
+                        className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${
+                            color === "red" && "bg-red-500"
+                        }`}
+                        onClick={() => handleColorChange("red")}
+                    ></div>
 
-            <img
-                src={CancelImage}
-                className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
-                alt="Cancel"
-                onClick={handleDelete}
-            />
+                    <img
+                        src={CancelImage}
+                        className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
+                        alt="Cancel"
+                        onClick={handleDelete}
+                    />
+                </>
+            )}
         </div>
     );
 };

@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import CancelImage from "../../assets/images/cancel.png";
+import pencilIcon from "../../assets/images/pencil.svg";
 import { deleteTodoServer } from "../../redux/todos/thunk/deleteTodo";
 import { updateColorServer } from "../../redux/todos/thunk/updateColor";
 import { updateTodoServer } from "../../redux/todos/thunk/updateStatus";
 
 const SingleTodo = ({ todo }) => {
-    const dispatch = useDispatch();
     const { text, id, completed, color } = todo;
+
+    const [isInput, setIsInput] = useState(false);
+    const [input, setInput] = useState(text);
+
+    const dispatch = useDispatch();
 
     const handleStatusChange = () => {
         dispatch(updateTodoServer(id, completed));
@@ -19,6 +24,16 @@ const SingleTodo = ({ todo }) => {
 
     const handleDelete = () => {
         dispatch(deleteTodoServer(id));
+    };
+
+    const handleOnBlur = () => {
+        setIsInput(false);
+        setInput(text);
+    };
+
+    const handleTodoTitle = () => {
+        setIsInput(false);
+        setInput(text);
     };
 
     return (
@@ -45,11 +60,33 @@ const SingleTodo = ({ todo }) => {
                 )}
             </div>
 
-            <div
-                className={`select-none flex-1 ${completed && "line-through"}`}
-            >
-                {text}
-            </div>
+            {isInput ? (
+                <form onSubmit={handleTodoTitle} className="select-none flex-1">
+                    <input
+                        className="w-full select-none flex-1 outline-2 outline-indigo-400 p-2 border-2 border-indigo-400 rounded-md"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onBlur={handleOnBlur}
+                    />
+                </form>
+            ) : (
+                <>
+                    <div
+                        className={`select-none flex-1 ${
+                            completed && "line-through"
+                        }`}
+                    >
+                        {text}
+                    </div>
+                    <div
+                        className="flex-shrink-0 h-4 w-4 rounded-full ml-auto cursor-pointer"
+                        onClick={() => setIsInput(true)}
+                        title="click to edit task"
+                    >
+                        <img src={pencilIcon} alt="" />
+                    </div>
+                </>
+            )}
 
             <div
                 className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-green-500 border-green-500 ${
